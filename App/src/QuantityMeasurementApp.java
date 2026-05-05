@@ -1,33 +1,58 @@
+
+
 public class QuantityMeasurementApp {
 
+    // Equality check
     public static boolean demonstrateLengthEquality(Length l1, Length l2) {
         return l1.equals(l2);
     }
 
-    public static void demonstrateFeetEquality() {
-        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length l2 = new Length(1.0, Length.LengthUnit.FEET);
+    // Comparison using raw values
+    public static boolean demonstrateLengthComparison(
+            double value1, Length.LengthUnit unit1,
+            double value2, Length.LengthUnit unit2) {
 
-        System.out.println("Feet Equal: " + l1.equals(l2));
+        Length l1 = new Length(value1, unit1);
+        Length l2 = new Length(value2, unit2);
+
+        return demonstrateLengthEquality(l1, l2);
     }
 
-    public static void demonstrateInchesEquality() {
-        Length l1 = new Length(1.0, Length.LengthUnit.INCHES);
-        Length l2 = new Length(1.0, Length.LengthUnit.INCHES);
+    // Conversion (value-based)
+    public static Length demonstrateLengthConversion(
+            double value,
+            Length.LengthUnit fromUnit,
+            Length.LengthUnit toUnit) {
 
-        System.out.println("Inches Equal: " + l1.equals(l2));
+        Length length = new Length(value, fromUnit);
+        return length.convertTo(toUnit);
     }
 
-    public static void demonstrateFeetInchesComparison() {
-        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
+    // Conversion (object-based) → Method Overloading
+    public static Length demonstrateLengthConversion(
+            Length length,
+            Length.LengthUnit toUnit) {
 
-        System.out.println("Feet == Inches: " + l1.equals(l2));
+        return length.convertTo(toUnit);
     }
 
+    // Main method
     public static void main(String[] args) {
-        demonstrateFeetEquality();
-        demonstrateInchesEquality();
-        demonstrateFeetInchesComparison();
+
+        // Equality
+        System.out.println(demonstrateLengthComparison(
+                1.0, Length.LengthUnit.FEET,
+                12.0, Length.LengthUnit.INCHES));
+
+        // Conversion
+        Length result = demonstrateLengthConversion(
+                3.0, Length.LengthUnit.FEET,
+                Length.LengthUnit.INCHES);
+
+        System.out.println(result);
+
+        Length yard = new Length(2.0, Length.LengthUnit.YARDS);
+        System.out.println(demonstrateLengthConversion(yard,
+                Length.LengthUnit.INCHES));
     }
 }
